@@ -1,27 +1,276 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Bienvenue </h1>
-    <section>
-        <h2>Empreinte de Eldhib Maram</h2>
-        <p>Passionné par le développement en Python, Java, Angular et TypeScript, j’aime créer des interfaces claires et dynamiques.</p>
-        <p>Ce projet reflète mon engagement pour un code bien structuré et une présentation soignée.</p>
-    </section>
-    <br>
-    <p>Lorem ipsum dolor sit amet, 
-        consectetur adipisicing elit. Voluptatum soluta molestias culpa ex! 
-        Delectus amet optio quos quas pariatur fuga cupiditate voluptate veritatis 
-        sapiente mollitia placeat, eius quidem, beatae culpa!</p>
-    <li>
-        <a href="page2.html">Aller à la page 2</a>
-        <br>
-        <a href="page3.html">Aller à la page 3</a>
-    </li>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio — Nejemddine Manaai</title>
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f5f4f2;
+      --text: #222;
+      --accent: #bca76a;
+      --card: #fff;
+      --shadow: rgba(0,0,0,0.1);
+      --font: 'Poppins', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      position: relative;
+      background: linear-gradient(120deg, #f1ede8, #faf9f6);
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--accent);
+      animation: fadeDown 1s ease forwards;
+    }
+
+    header h2 {
+      font-size: 1.3rem;
+      color: #555;
+      opacity: 0;
+      animation: fadeUp 1.5s ease forwards;
+      animation-delay: .4s;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+
+    section {
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px var(--shadow);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all .8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section h3 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+
+    nav {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .nav-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: .8rem 1.6rem;
+      margin: .3rem;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-4px);
+      background: #a68f50;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: #666;
+      font-size: .9rem;
+      border-top: 1px solid #ddd;
+      background: #fafafa;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.9rem; }
+      section { padding: 1.2rem; }
+    }
+
+    /* Background floating shapes */
+    header::before, header::after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(188,167,106,0.15);
+      border-radius: 50%;
+      top: -50px;
+      left: -80px;
+      animation: float 6s ease-in-out infinite alternate;
+    }
+    header::after {
+      width: 250px;
+      height: 250px;
+      bottom: -100px;
+      right: -80px;
+      top: auto;
+      animation-delay: 2s;
+    }
+    @keyframes float {
+      from { transform: translateY(0px) rotate(0deg); }
+      to { transform: translateY(25px) rotate(10deg); }
+    }
+
+    /* ===== Popup personnalisé ===== */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      z-index: 1000;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    .popup h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .popup button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -40%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Nejemddine Manaai</h1>
+    <h2>Développeur Full Stack créatif</h2>
+  </header>
+
+  <main>
+    <section>
+      <h3>À propos</h3>
+      <p>Je suis passionné par le développement d’applications modernes avec <strong>Angular</strong>, <strong>Java</strong> et <strong>Python</strong>. Mon objectif est de créer des solutions performantes et esthétiques, avec une expérience utilisateur fluide.</p>
+    </section>
+
+    <section>
+      <h3>Projets récents</h3>
+      <p>• Application de gestion hôtelière — Angular & Spring Boot</p>
+      <p>• Portfolio personnel — HTML, CSS, JS</p>
+      <p>• Mini API REST — Python Flask</p>
+    </section>
+
+    <section>
+      <h3>Contact</h3>
+      <p>Vous pouvez me suivre sur Instagram pour voir mes créations 👇</p>
+      <button class="nav-btn" id="insta">Instagram</button>
+    </section>
+
+    <nav>
+      <button class="nav-btn">Page 2</button>
+      <button class="nav-btn">Page 3</button>
+    </nav>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Nejemddine Manaai — Tous droits réservés.
+  </footer>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <h2>Ahla bik papa 😎</h2>
+    <p>Direction Instagram 🚀</p>
+    <button id="closeBtn">Fermer</button>
+  </div>
+
+  <!-- Confettis -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // Année actuelle
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Animation sections
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    sections.forEach(section => observer.observe(section));
+
+    // Effet Instagram
+    const popup = document.getElementById('popup');
+    const closeBtn = document.getElementById('closeBtn');
+    const instaBtn = document.getElementById('insta');
+
+    instaBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      popup.style.display = 'block';
+      // Confettis + son
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        }, i * 400);
+      }
+      const sound = new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_91c5a0f57d.mp3?filename=correct-2-46134.mp3");
+      sound.play();
+    });
+
+    closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+      window.open("https://www.instagram.com/njouma_manaai8/", "_blank");
+    });
+  </script>
 </body>
 </html>
